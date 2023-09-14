@@ -3,11 +3,13 @@ package com.portafolio.ApiController;
 import com.portafolio.Domain.Models.Portafolio;
 import com.portafolio.Domain.Service.PortafolioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin( origins = "http://localhost:5173/")
 @RequestMapping(path = "api/v1/portfolio")
 
 public class PortafolioController {
@@ -16,28 +18,37 @@ public class PortafolioController {
 
     @Autowired
 
-    public PortafolioController(com.portafolio.Domain.Service.PortafolioService portafolioService) {
-        PortafolioService = portafolioService;
+    public PortafolioController(PortafolioService portafolioService) {
+        this.PortafolioService = portafolioService;
     }
-
     @GetMapping
-    public List<Portafolio> getPortafolioService(){
-        return PortafolioService.getFormulario();
+    public List <Portafolio> getPedidoController(){
+        return PortafolioService.getPortafolio();
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Portafolio> getPortafolioPorId(@PathVariable Integer id) {
+        // Lógica para obtener la cita por ID y devolverla en la respuesta ResponseEntity
+        Portafolio cita = PortafolioService.portafolioById(id);
+        if (cita != null ) {
+            return ResponseEntity.ok(cita);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
-    public void createFormulario(@RequestBody Portafolio Portafolio){
-        PortafolioService.newPortafolio(Portafolio);
+    public void createPortafolio(@RequestBody Portafolio portafolio){
+        PortafolioService.newPortafolio(portafolio);
     }
 
     @PutMapping("/{id}")
-    public void updatePortafolio(@PathVariable Integer id, @RequestBody Portafolio Portafolio){
-        PortafolioService.update(id, Portafolio);
+    public void updatePortafolio(@PathVariable Integer id, @RequestBody Portafolio portafolio){
+        PortafolioService.update(id, portafolio);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id, Portafolio portafolio){
-        PortafolioService.deletePortafolio(id, portafolio);
+    public void  deletePortafolio(@PathVariable Integer id, Portafolio portafolio){
+        PortafolioService.delete(id, portafolio);
     }
 }
 

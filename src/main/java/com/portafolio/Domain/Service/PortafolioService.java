@@ -11,42 +11,45 @@ import java.util.Optional;
 @Service
 public class PortafolioService {
 
-    private final PortafolioRepositori PortafolioRepositori;
-
+    private final PortafolioRepositori portafolioRepositori;
     @Autowired
+    public PortafolioService(PortafolioRepositori portafolioRepositori) {
 
-    public PortafolioService(com.portafolio.Repositories.PortafolioRepositori portafolioRepositori) {
-        PortafolioRepositori = portafolioRepositori;
+        this.portafolioRepositori = portafolioRepositori;
     }
 
+    public List<Portafolio> getPortafolio(){
 
-    public List<Portafolio> getFormulario(){
-        return PortafolioRepositori.findAll();
+        return portafolioRepositori.findAll();
     }
 
     public void newPortafolio(Portafolio portafolio) {
-        PortafolioRepositori.save(portafolio);
+        portafolioRepositori.save(portafolio);
     }
-
+    public Portafolio portafolioById(Integer id) {
+        Optional<Portafolio> portafolioByID = (portafolioRepositori.findById(id));
+        return portafolioByID.orElse(null);
+    }
     public void update(Integer id, Portafolio portafolio) {
-        Optional<Portafolio> portafolioById = PortafolioRepositori.findById(id);
+        Portafolio portafolioExistente = portafolioById(id);
 
-        if (portafolioById.isPresent()){
-            Portafolio PortafolioExistente = portafolioById.get();
+        if (portafolioExistente == null) {
+            System.out.println("error");
 
-            PortafolioExistente.setTitulo(portafolio.getTitulo());
-            PortafolioExistente.setFoto(portafolio.getFoto());
-            PortafolioExistente.setGit(portafolio.getGit());
-            PortafolioExistente.setDescripcion(portafolio.getDescripcion());
-
-            PortafolioRepositori.save(PortafolioExistente);
         }
+        portafolioExistente.setTitulo(portafolio.getTitulo());
+        portafolioExistente.setFoto(portafolio.getFoto());
+        portafolioExistente.setGit(portafolio.getGit());
+        portafolioExistente.setDescripcion(portafolio.getDescripcion());
+
+        portafolioRepositori.save(portafolioExistente);
     }
 
-    public void deletePortafolio(Integer id, Portafolio portafolio) {
-        boolean existe = PortafolioRepositori.existsById(id);
+
+    public void delete(Integer id, Portafolio portafolio) {
+        boolean existe = portafolioRepositori.existsById(id);
         if (existe) {
-            PortafolioRepositori.delete(portafolio);
+            portafolioRepositori.delete(portafolio);
         }
     }
 }

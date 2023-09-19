@@ -12,24 +12,24 @@ public class Portafolio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String titulo;
-    private String foto;
+    private String imagen;
     private String git;
     private String descripcion;
 
     public Portafolio() {
     }
 
-    public Portafolio(Integer id, String titulo, String foto, String git, String descripcion) {
+    public Portafolio(Integer id, String titulo, String imagen, String git, String descripcion) {
         this.id = id;
         this.titulo = titulo;
-        this.foto = foto;
+        this.imagen = imagen;
         this.git = git;
         this.descripcion = descripcion;
     }
 
-    public Portafolio(String titulo, String foto, String git, String descripcion) {
+    public Portafolio(String titulo, String imagen, String git, String descripcion) {
         this.titulo = titulo;
-        this.foto = foto;
+        this.imagen = imagen;
         this.git = git;
         this.descripcion = descripcion;
     }
@@ -50,12 +50,12 @@ public class Portafolio {
         this.titulo = titulo;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getImagen() {
+        return imagen;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public String getGit() {

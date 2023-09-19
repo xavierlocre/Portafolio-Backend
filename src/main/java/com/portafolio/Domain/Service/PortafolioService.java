@@ -38,7 +38,7 @@ public class PortafolioService {
 
         }
         portafolioExistente.setTitulo(portafolio.getTitulo());
-        portafolioExistente.setFoto(portafolio.getFoto());
+        portafolioExistente.setImagen(portafolio.getImagen());
         portafolioExistente.setGit(portafolio.getGit());
         portafolioExistente.setDescripcion(portafolio.getDescripcion());
 
